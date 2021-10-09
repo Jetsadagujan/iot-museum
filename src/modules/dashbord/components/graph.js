@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import firebaseConfig from "../../../firebase/config/config";
+import { Typography } from "@material-ui/core";
 
-export default function Graph() {
-  const series = [
+export default function Graph(props) {
+  const { controller } = props;
+  const [dataGraph, setDatagraph] = useState(undefined);
+  const [idDoc, setIddoc] = useState(undefined);
+  var series = [
     {
-      name: "series1",
-      data: [31, 40, 28, 51, 42, 109, 100],
+      name: "humadity",
+      data: [0],
     },
     {
-      name: "series2",
-      data: [11, 32, 45, 32, 34, 52, 41],
+      name: "ligth",
+      data: [0],
     },
   ];
-  const options = {
+  var options = {
     chart: {
       height: 350,
       type: "area",
@@ -24,33 +29,119 @@ export default function Graph() {
       curve: "smooth",
     },
     xaxis: {
-      type: "datetime",
-      categories: [
-        "2018-09-19T00:00:00.000Z",
-        "2018-09-19T01:30:00.000Z",
-        "2018-09-19T02:30:00.000Z",
-        "2018-09-19T03:30:00.000Z",
-        "2018-09-19T04:30:00.000Z",
-        "2018-09-19T05:30:00.000Z",
-        "2018-09-19T06:30:00.000Z",
-      ],
+      type: "string",
+      categories: ["00:00"],
     },
     tooltip: {
       x: {
-        format: "dd/MM/yy HH:mm",
+        format: "HH:mm",
       },
     },
   };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(async () => {
+    const check = async () => {
+      try {
+        firebaseConfig
+          .firestore()
+          .collection(`${controller}`)
+          .where(
+            "createdAt",
+            "==",
+            new Date(
+              `${
+                new Date().getMonth() + 1
+              }/${new Date().getDate()}/${new Date().getFullYear()}/00:00:00`
+            )
+          )
+          .onSnapshot((ss) => {
+            const data = {};
+            ss.forEach((document) => {
+              data[document.id] = document.data();
+              setIddoc(document.id);
+            });
+            setDatagraph(data);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    check();
+  }, [controller]);
+
+  if (!controller || controller === "none") {
+    return (
+      <>
+        <Typography variant="h4" gutterBottom component="div">
+          No Select
+        </Typography>
+      </>
+    );
+  } else if (dataGraph) {
+    try {
+      series = [
+        {
+          name: "humadity",
+          data: dataGraph[idDoc].humadity,
+        },
+        {
+          name: "ligth",
+          data: dataGraph[idDoc].ligth,
+        },
+      ];
+      options = {
+        chart: {
+          height: 350,
+          type: "area",
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: "smooth",
+        },
+        xaxis: {
+          type: "string",
+          categories: dataGraph[idDoc].time,
+        },
+        tooltip: {
+          x: {
+            format: "HH:mm",
+          },
+        },
+      };
+    } catch (error) {}
+    return (
+      <>
+        {Object.keys(dataGraph).length === 0 &&
+        dataGraph.constructor === Object ? (
+          <Typography variant="h4" gutterBottom component="div">
+            No Data in Date
+          </Typography>
+        ) : (
+          <div>
+            <>
+              {console.log("1 ==> ", series)}
+              {console.log("2 ==> ", options)}
+            </>
+            <ReactApexChart
+              options={options}
+              series={series}
+              type="area"
+              height={350}
+            />
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
     <>
-      <div>
-        <ReactApexChart
-          options={options}
-          series={series}
-          type="area"
-          height={350}
-        />
-      </div>
+      <Typography variant="h4" gutterBottom component="div">
+        Loading.....
+      </Typography>
     </>
   );
 }

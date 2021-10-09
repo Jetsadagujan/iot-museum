@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button, TextField, FormControl } from "@material-ui/core";
+import SearchFiretrue from "./search copy";
 
 export default function FireStore() {
   const [user, setUser] = useState(undefined);
@@ -99,6 +100,7 @@ export default function FireStore() {
           </Button>
         </FormControl>
       </form>
+      <SearchFiretrue></SearchFiretrue>
     </div>
   );
 }

@@ -12,7 +12,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import Tabledata from "./row";
-import Graph from "./graph";
+import Selectdisplay from "./selectdisplay";
 
 export default function DashbordItem() {
   const [dash, setDash] = useState(undefined);
@@ -35,17 +35,13 @@ export default function DashbordItem() {
         // เปลี่ยนค่าตัวแปร state
         setDash(users);
       });
-
-    // firebaseConfig.firestore().collection(`${userContext[0].work}`).orderBy;
   }, [userContext]);
 
   if (dash) {
     return (
       <>
-        <Graph></Graph>
-        {/* {Object.keys(dash).map((id) => {
-          return <div key={id}>{console.log(dash[id].createdAt)}</div>;
-        })} */}
+        <Selectdisplay IDctl={dash}></Selectdisplay>
+
         <Grid container spacing={2} justifyContent="center">
           {dash ? (
             <TableContainer component={Paper}>
