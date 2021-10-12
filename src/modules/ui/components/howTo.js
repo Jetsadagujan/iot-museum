@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Toolbar } from "@material-ui/core";
+import { Toolbar, Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   bg: {
@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme) => ({
 export default function Howto() {
   const classes = useStyles();
   return (
-    <div>
+    <Grid item xs={12}>
       <Toolbar></Toolbar>
       <div className={classes.bg} id="howTo">
         Howto
       </div>
-    </div>
+    </Grid>
   );
 }

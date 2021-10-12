@@ -11,6 +11,8 @@ import {
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import GraphPDF from "./grapPDF";
+import "react-datepicker/dist/react-datepicker.css";
+import "./DateStyles.css";
 
 export default function SelectData(props) {
   const [selectDate, setSelectDate] = useState(null);
@@ -28,13 +30,13 @@ export default function SelectData(props) {
 
   return (
     <Grid container spacing={2} justifyContent={"center"}>
-      <Grid item xs={10}>
+      <Grid item xs={12} md={6}>
         <Box
           sx={{ m: 1, minWidth: 120 }}
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "flex-end",
+            justifyContent: "flex-start",
           }}
         >
           <Typography
@@ -43,7 +45,7 @@ export default function SelectData(props) {
             component="div"
             style={{ padding: "20px" }}
           >
-            Select display :
+            Select Room
           </Typography>
           <FormControl variant="filled">
             <InputLabel id="demo-simple-select-filled-label">
@@ -57,7 +59,7 @@ export default function SelectData(props) {
               label="Display"
               onChange={handleChange}
               style={{
-                width: "150px",
+                width: "200px",
               }}
             >
               <MenuItem value={"none"}>none</MenuItem>
@@ -70,7 +72,24 @@ export default function SelectData(props) {
           </FormControl>
         </Box>
       </Grid>
-      <Grid item xs={10}>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography
+          variant="h4"
+          gutterBottom
+          component="div"
+          style={{ padding: "20px" }}
+        >
+          Select Date
+        </Typography>
         <ReactDatePicker
           selected={selectDate}
           onChange={(date) => setSelectDate(date)}
