@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import firebaseConfig from "../../firebase/config/config";
+import LoadingPage from "../../modules/dashbord/components/loadingPage";
 
 export const AuthContext = React.createContext();
 
@@ -41,7 +42,7 @@ export const AuthProvider = ({ children }) => {
   // }, [currentUser]);
 
   if (loading) {
-    return <p>Loading......</p>;
+    return <LoadingPage />;
   }
 
   return (

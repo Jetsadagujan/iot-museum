@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import firebaseConfig from "../../../firebase/config/config";
-import { Typography } from "@material-ui/core";
+import { Typography, Box, Paper } from "@material-ui/core";
+import Loading from "./Loading";
 
 export default function Graph(props) {
   const { controller } = props;
@@ -73,9 +74,37 @@ export default function Graph(props) {
   if (!controller || controller === "none") {
     return (
       <>
-        <Typography variant="h4" gutterBottom component="div">
-          No Select
-        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            "& > :not(style)": {
+              m: 1,
+              width: "100%",
+              height: 128,
+            },
+          }}
+        >
+          <Paper
+            elevation={5}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              background:
+                "radial-gradient(circle, rgba(251,167,63,1) 11%, rgba(251,252,70,1) 100%)",
+            }}
+          >
+            <Typography variant="h3" gutterBottom component="div">
+              No Display Select
+            </Typography>
+          </Paper>
+        </Box>
+        {/* <div>
+          <Typography variant="h4" gutterBottom component="div">
+            No Select
+          </Typography>
+        </div> */}
       </>
     );
   } else if (dataGraph) {
@@ -116,9 +145,32 @@ export default function Graph(props) {
       <>
         {Object.keys(dataGraph).length === 0 &&
         dataGraph.constructor === Object ? (
-          <Typography variant="h4" gutterBottom component="div">
-            No Data in Date
-          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              "& > :not(style)": {
+                m: 1,
+                width: "100%",
+                height: 128,
+              },
+            }}
+          >
+            <Paper
+              elevation={5}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                background:
+                  "radial-gradient(circle, rgba(63,251,167,1) 11%, rgba(70,252,106,1) 100%)",
+              }}
+            >
+              <Typography variant="h3" gutterBottom component="div">
+                No Data in Date
+              </Typography>
+            </Paper>
+          </Box>
         ) : (
           <div>
             <>
@@ -139,9 +191,7 @@ export default function Graph(props) {
 
   return (
     <>
-      <Typography variant="h4" gutterBottom component="div">
-        Loading.....
-      </Typography>
+      <Loading></Loading>
     </>
   );
 }

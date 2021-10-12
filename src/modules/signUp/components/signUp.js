@@ -201,9 +201,11 @@ export default function SignUp() {
               </FormControl>
             </Grid>
             <Grid item>
-              <Button type="submit" variant="contained" color="primary">
-                SignUp
-              </Button>
+              <Link href="/" underline="none">
+                <Button type="submit" variant="contained" color="primary">
+                  SignUp
+                </Button>
+              </Link>
               <Link href="/" underline="none">
                 <Button variant="contained" color="secondary">
                   Close

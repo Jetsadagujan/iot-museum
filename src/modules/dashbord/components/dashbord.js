@@ -1,28 +1,29 @@
 import React, { useContext } from "react";
 import clsx from "clsx";
+import { Route, Switch } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-//import Typography from "@material-ui/core/Typography";
+import Logout from "@material-ui/icons/ExitToApp";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import Index from "@material-ui/icons/List";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import { Link } from "@material-ui/core";
 import firebaseConfig from "../../../firebase/config/config";
 import { AuthContext } from "../../../context/componentss/context";
 import { Redirect } from "react-router";
 import DashbordItem from "./dashbordItems";
-import ButtonAdd from "./butaddroom";
+import ExamplePDF from "./topdf/toPDF";
+import { Skeleton } from "@material-ui/lab";
 
 const drawerWidth = 240;
 
@@ -141,36 +142,39 @@ export default function Dashbord() {
             </IconButton>
           </div>
           <Divider />
-          <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+          <ListItem button key="Index">
+            <ListItemIcon>
+              <Index />
+            </ListItemIcon>
+            <Link href="/dashbord/index" color={"textPrimary"} underline="none">
+              <ListItemText primary="Index"></ListItemText>
+            </Link>
+          </ListItem>
           <Divider />
-          <List>
-            {["All mail", "Trash"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+          <ListItem button key="ExportPDF">
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <Link
+              href="/dashbord/exportpdf"
+              color={"textPrimary"}
+              underline="none"
+            >
+              <ListItemText primary="ExportPDF"></ListItemText>
+            </Link>
+          </ListItem>
+          <Divider />
           <ListItem
             button
             key="LogOut"
             onClick={() => firebaseConfig.auth().signOut()}
           >
             <ListItemIcon>
-              {2 % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <Logout />
             </ListItemIcon>
-            <ListItemText primary="LogOut"></ListItemText>
+            <Link href="/" color={"textPrimary"} underline="none">
+              <ListItemText primary="Logout"></ListItemText>
+            </Link>
           </ListItem>
         </Drawer>
         <main
@@ -182,21 +186,36 @@ export default function Dashbord() {
           <div>
             {userContext ? (
               <>
-                <DashbordItem></DashbordItem>
+                <Switch>
+                  <Route path="/dashbord/exportpdf">
+                    <ExamplePDF></ExamplePDF>
+                  </Route>
+                  <Route path="/dashbord/index">
+                    <DashbordItem></DashbordItem>
+                  </Route>
+                  <Route path="/dashbord">
+                    <DashbordItem></DashbordItem>
+                  </Route>
+                </Switch>
               </>
             ) : (
-              <div>"loading ............"</div>
+              <>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Skeleton variant="text" width={"80%"} />
+                  <Skeleton variant="rect" width={"80%"} height={100} />
+                  <Skeleton variant="rect" width={"80%"} height={300} />
+                </div>
+              </>
             )}
           </div>
           <div className={classes.drawerHeader} />
-          {/* <Button
-            variant="contained"
-            color="primary"
-            className={classes.addButton}
-          >
-            ADD
-          </Button> */}
-          <ButtonAdd></ButtonAdd>
         </main>
       </div>
     );

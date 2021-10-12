@@ -4,8 +4,6 @@ import { Route, Switch } from "react-router-dom";
 import HomeRoutes from "./routes";
 import SignUpRoutes from "../../signUp/components/routes";
 import DashBordRoutes from "../../dashbord/components/routes";
-//import SignUp from "../../signUp/components/signUp";
-//import Dashbord from "../../dashbord/components/dashbord";
 
 export default function Layout() {
   return (

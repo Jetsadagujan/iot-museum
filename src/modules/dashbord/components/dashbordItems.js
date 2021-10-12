@@ -13,6 +13,8 @@ import {
 } from "@material-ui/core";
 import Tabledata from "./row";
 import Selectdisplay from "./selectdisplay";
+import ButtonAdd from "./butaddroom";
+import { Skeleton } from "@material-ui/lab";
 
 export default function DashbordItem() {
   const [dash, setDash] = useState(undefined);
@@ -41,37 +43,55 @@ export default function DashbordItem() {
     return (
       <>
         <Selectdisplay IDctl={dash}></Selectdisplay>
-
         <Grid container spacing={2} justifyContent="center">
-          {dash ? (
-            <TableContainer component={Paper}>
-              <Table aria-label="collapsible table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell />
-                    <TableCell>TitleRoom</TableCell>
-                    <TableCell align="right">maxHumidity</TableCell>
+          <Grid item xs={10}>
+            {dash ? (
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="collapsible table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Edit</TableCell>
+                      <TableCell>TitleRoom</TableCell>
+                      <TableCell align="right">IDcontroller</TableCell>
+                      {/* <TableCell align="right">maxHumidity</TableCell>
                     <TableCell align="right">minHumidity</TableCell>
                     <TableCell align="right">maxLight</TableCell>
-                    <TableCell align="right">minLigth</TableCell>
-                    <TableCell align="right">Humidity</TableCell>
-                    <TableCell align="right">Light</TableCell>
-                    <TableCell />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {Object.keys(dash).map((id) => (
-                    <Tabledata key={id} row={dash[id]} id={id} />
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          ) : (
-            <div>loading.........itemdash</div>
-          )}
+                    <TableCell align="right">minLigth</TableCell> */}
+                      <TableCell align="right">Humidity</TableCell>
+                      <TableCell align="right">Light</TableCell>
+                      <TableCell align="right">Delete</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {Object.keys(dash).map((id) => (
+                      <Tabledata key={id} row={dash[id]} id={id} />
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <div>loading.........itemdash</div>
+            )}
+          </Grid>
         </Grid>
+        <ButtonAdd></ButtonAdd>
       </>
     );
   }
-  return <div>loading.........itemdash</div>;
+  return (
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Skeleton variant="text" width={"80%"} />
+        <Skeleton variant="rect" width={"80%"} height={100} />
+        <Skeleton variant="rect" width={"80%"} height={300} />
+      </div>
+    </>
+  );
 }
