@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import firebaseConfig from "../../../firebase/config/config";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   titleapp: {
@@ -33,6 +34,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAdd() {
+  const { enqueueSnackbar } = useSnackbar();
+  const deFault = {
+    IDcontroller: ``,
+    TitleRoom: ``,
+    maxHumidity: ``,
+    minHumidity: ``,
+    maxLight: ``,
+    minLigth: ``,
+  };
+  const [datacheck, setDatacheck] = useState(null);
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
   const classes = useStyles();
@@ -40,6 +51,7 @@ export default function ButtonAdd() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(
@@ -64,19 +76,39 @@ export default function ButtonAdd() {
 
   const submit = async (loginInfo) => {
     try {
-      await firebaseConfig
-        .firestore()
-        .collection(`${user[0].work}`)
-        .add({
-          IDcontroller: `${loginInfo.contlroller}`,
-          titleRoom: `${loginInfo.titleRoom}`,
-          maxHumidity: `${loginInfo.maxHumadity}`,
-          minHumidity: `${loginInfo.minHumadity}`,
-          maxLight: `${loginInfo.maxLigth}`,
-          minLigth: `${loginInfo.minLigth}`,
-          createdAt: new Date(Date.now()),
-        });
-      console.log(user);
+      const mydata = await firebaseConfig
+        .database()
+        .ref(`data/${loginInfo.contlroller}`);
+      mydata.on("value", (datasnap) => setDatacheck(datasnap.val()));
+      if (datacheck) {
+        await firebaseConfig
+          .firestore()
+          .collection(`${user[0].work}`)
+          .add({
+            IDcontroller: `${loginInfo.contlroller}`,
+            titleRoom: `${loginInfo.titleRoom}`,
+            maxHumidity: `${loginInfo.maxHumadity}`,
+            minHumidity: `${loginInfo.minHumadity}`,
+            maxLight: `${loginInfo.maxLigth}`,
+            minLigth: `${loginInfo.minLigth}`,
+            createdAt: new Date(Date.now()),
+          });
+        reset(deFault);
+        const handleClick = () => {
+          enqueueSnackbar("Add room success!", {
+            variant: "success",
+          });
+        };
+        return handleClick() || handleClose();
+      } else {
+        const handleClick = () => {
+          enqueueSnackbar("No IDcontroller", {
+            variant: "error",
+          });
+        };
+        reset(deFault);
+        return handleClick() || handleClose();
+      }
     } catch (error) {
       alert(error);
     }

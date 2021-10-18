@@ -64,9 +64,7 @@ export default function Graph(props) {
             });
             setDatagraph(data);
           });
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     check();
   }, [controller]);

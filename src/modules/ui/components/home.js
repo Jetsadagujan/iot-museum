@@ -35,8 +35,8 @@ export default function Home() {
             elevation={10}
             style={{
               position: "absolute",
-              top: "100px",
-              left: "100",
+              top: "200px",
+              left: "100px",
               width: "400px",
             }}
           >
@@ -57,7 +57,7 @@ export default function Home() {
         <div
           style={{
             position: "absolute",
-            top: "260px",
+            top: "360px",
             left: "100px",
             width: "400px",
           }}
