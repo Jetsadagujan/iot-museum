@@ -11,12 +11,16 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     console.log("in");
+    try {
+      firebaseConfig.auth().onAuthStateChanged((user) => {
+        setCurrentUser(user);
+        setLoading(false);
+        console.log("in A");
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
-    firebaseConfig.auth().onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      setLoading(false);
-      console.log("in A");
-    });
     if (currentUser) {
       console.log("in B");
       async function get() {
@@ -37,9 +41,7 @@ export const AuthProvider = ({ children }) => {
     }
   }, [currentUser]);
 
-  // useEffect(() => {
-
-  // }, [currentUser]);
+  useEffect(() => {}, [currentUser]);
 
   if (loading) {
     return <LoadingPage />;
