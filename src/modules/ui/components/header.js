@@ -50,10 +50,10 @@ export default function Header() {
             </Links>
             <Links
               activeClass="active"
-              to="about"
+              to="home"
               spy={true}
               smooth={true}
-              offset={0}
+              offset={750}
               duration={500}
               className={classes.menuLink}
             >

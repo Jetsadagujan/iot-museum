@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import firebaseConfig from "../../../firebase/config/config";
 import { TableCell } from "@material-ui/core";
+import CheckTime from "./checktime";
 
 export default function DashDeails(props) {
+  // const [count, setCount] = useState(0);
   const { detail } = props;
   const [dataItem, setSensor] = useState();
   useEffect(() => {
@@ -13,10 +15,18 @@ export default function DashDeails(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // const sumCount = async (sum) => {
+  //   setCount(sum);
+  //   // console.log(count);
+  // };
+
   if (dataItem) {
     return (
       <>
-        {/* {console.log(+detail.maxHumidity)} */}
+        <CheckTime
+          time={dataItem.time}
+          id={props.detail.IDcontroller}
+        ></CheckTime>
         {props.st === 1 ? (
           // <TableCell align="right">{dataItem.humadity}</TableCell>
           dataItem.humadity > +detail.maxHumidity ||
@@ -26,6 +36,7 @@ export default function DashDeails(props) {
               style={{ backgroundColor: "white", color: "red" }}
             >
               {dataItem.humadity}
+              {/* <div onChange={sumCount(dataItem.time)}></div> */}
             </TableCell>
           ) : (
             <TableCell

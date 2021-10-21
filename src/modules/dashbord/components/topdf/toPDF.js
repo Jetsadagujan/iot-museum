@@ -61,7 +61,7 @@ const ExamplePDF = () => {
         </Grid>
         <Grid item xs={10}>
           <Button variant="contained" onClick={handlePrint} color="primary">
-            Print this out!
+            Print this
           </Button>
         </Grid>
       </Grid>
