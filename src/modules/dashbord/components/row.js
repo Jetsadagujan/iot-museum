@@ -57,6 +57,7 @@ export default function Tabledata(props) {
         <TableCell align="right">{row.IDcontroller}</TableCell>
         <DashValue detail={row} st={1} key={id}></DashValue>
         <DashValue detail={row} st={2} key={row.titleRoom}></DashValue>
+        <DashValue detail={row} st={3}></DashValue>
         <TableCell align="right">
           <IconButton
             aria-label="expand row"
@@ -86,14 +87,7 @@ export default function Tabledata(props) {
           <Button
             variant="outlined"
             color="primary"
-            onClick={
-              () => deletethis(userContext[0].work, id)
-              // firebaseConfig
-              //   .firestore()
-              //   .collection(`${userContext[0].work}`)
-              //   .doc(`${id}`)
-              //   .delete()
-            }
+            onClick={() => deletethis(userContext[0].work, id)}
           >
             Confirm
           </Button>

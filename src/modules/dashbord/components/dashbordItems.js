@@ -53,12 +53,9 @@ export default function DashbordItem() {
                       <TableCell>Edit</TableCell>
                       <TableCell>TitleRoom</TableCell>
                       <TableCell align="right">IDcontroller</TableCell>
-                      {/* <TableCell align="right">maxHumidity</TableCell>
-                    <TableCell align="right">minHumidity</TableCell>
-                    <TableCell align="right">maxLight</TableCell>
-                    <TableCell align="right">minLigth</TableCell> */}
                       <TableCell align="right">Humidity</TableCell>
                       <TableCell align="right">Light</TableCell>
+                      <TableCell align="right">Status</TableCell>
                       <TableCell align="right">Delete</TableCell>
                     </TableRow>
                   </TableHead>

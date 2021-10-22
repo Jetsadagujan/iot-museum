@@ -1,40 +1,44 @@
 import React, { useState, useEffect } from "react";
-import firebaseConfig from "../../../firebase/config/config";
+// import firebaseConfig from "../../../firebase/config/config";
+import { TableCell } from "@material-ui/core";
 
 const date = new Date();
 
 export default function CheckTime(props) {
-  const { time, id } = props;
-  const [count, setCount] = useState(0);
+  const { time } = props;
+  // const [count, setCount] = useState(0);
   //   const [lcount, setLcount] = useState(0);
   const [dateTime, setDateTime] = useState(date.getSeconds());
   useEffect(() => {
-    setCount(time);
     const timer = setInterval(() => {
       const date = new Date();
-      setDateTime(date.getSeconds());
+      setDateTime(date.getHours() + date.getMinutes() + date.getSeconds());
+      // setCount(+time);
     }, 1000);
     return () => clearInterval(timer);
-    // let sumtime = time;
-    // const updateData = () => {
-    //   firebaseConfig.database().ref(`data/${id}`).update({
-    //     online: sumtime,
-    //   });
-    //   //   setCount(time);
-    // };
-    // return updateData;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
+      {/* {console.log(`${time}...${dateTime}...${id}`)} */}
       {/* {console.log(dateTime)}
       {console.log(`${count} ${id}`)} */}
-      {/* {dateTime < count ? (
-        <div>{console.log(`online ${id}`)}</div>
+      {+time < +dateTime + 10 && +time > +dateTime - 10 ? (
+        <TableCell
+          align="right"
+          style={{ backgroundColor: "white", color: "green" }}
+        >
+          Online
+        </TableCell>
       ) : (
-        <div>{console.log(`offline ${id}`)}</div>
-      )} */}
+        <TableCell
+          align="right"
+          style={{ backgroundColor: "white", color: "red" }}
+        >
+          Offline
+        </TableCell>
+      )}
     </>
   );
 }

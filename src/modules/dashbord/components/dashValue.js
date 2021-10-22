@@ -23,10 +23,10 @@ export default function DashDeails(props) {
   if (dataItem) {
     return (
       <>
-        <CheckTime
+        {/* <CheckTime
           time={dataItem.time}
           id={props.detail.IDcontroller}
-        ></CheckTime>
+        ></CheckTime> */}
         {props.st === 1 ? (
           // <TableCell align="right">{dataItem.humadity}</TableCell>
           dataItem.humadity > +detail.maxHumidity ||
@@ -47,21 +47,28 @@ export default function DashDeails(props) {
             </TableCell>
           )
         ) : // <TableCell align="right">{dataItem.ligth}</TableCell>
-        dataItem.ligth > +detail.maxLigth ||
+        props.st === 2 ? (
+          dataItem.ligth > +detail.maxLigth ||
           dataItem.ligth < +detail.minLigth ? (
-          <TableCell
-            align="right"
-            style={{ backgroundColor: "white", color: "red" }}
-          >
-            {dataItem.ligth}
-          </TableCell>
+            <TableCell
+              align="right"
+              style={{ backgroundColor: "white", color: "red" }}
+            >
+              {dataItem.ligth}
+            </TableCell>
+          ) : (
+            <TableCell
+              align="right"
+              style={{ backgroundColor: "white", color: "green" }}
+            >
+              {dataItem.ligth}
+            </TableCell>
+          )
         ) : (
-          <TableCell
-            align="right"
-            style={{ backgroundColor: "white", color: "green" }}
-          >
-            {dataItem.ligth}
-          </TableCell>
+          <CheckTime
+            time={dataItem.time}
+            id={props.detail.IDcontroller}
+          ></CheckTime>
         )}
       </>
     );
