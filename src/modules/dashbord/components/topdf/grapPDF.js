@@ -193,6 +193,11 @@ export default function GraphPDF(props) {
                     <TableCell align="right">Light</TableCell>
                   </TableRow>
                 </TableHead>
+                {/* {dataGraph
+                  ? dataGraph[idDoc].humadity.map((id, index) =>
+                      console.log(dataGraph[idDoc].humadity[1])
+                    )
+                  : ""} */}
                 <TableBody>
                   {dataGraph ? (
                     dataGraph[idDoc].humadity.map((id, index) => (
@@ -212,7 +217,7 @@ export default function GraphPDF(props) {
                           {dataGraph[idDoc].minHumidity[index]}
                         </TableCell>
                         <TableCell align="right">
-                          {dataGraph[idDoc].maxLight[index]}
+                          {dataGraph[idDoc].maxLigth[index]}
                         </TableCell>
                         <TableCell align="right">
                           {dataGraph[idDoc].minLigth[index]}
