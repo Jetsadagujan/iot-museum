@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import firebaseConfig from "../../../firebase/config/config";
 import { Edit } from "@material-ui/icons";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   titleapp: {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Editmaster(props) {
+  const { enqueueSnackbar } = useSnackbar();
   const { row, id } = props;
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
@@ -36,7 +38,7 @@ export default function Editmaster(props) {
     TitleRoom: `${row.titleRoom}`,
     maxHumidity: `${row.maxHumidity}`,
     minHumidity: `${row.minHumidity}`,
-    maxLight: `${row.maxLight}`,
+    maxLigth: `${row.maxLigth}`,
     minLigth: `${row.minLigth}`,
   };
   const {
@@ -53,7 +55,7 @@ export default function Editmaster(props) {
         TitleRoom: yup.string().required(),
         maxHumidity: yup.string().required(),
         minHumidity: yup.string().required(),
-        maxLight: yup.string().required(),
+        maxLigth: yup.string().required(),
         minLigth: yup.string().required(),
       })
     ),
@@ -80,10 +82,16 @@ export default function Editmaster(props) {
           titleRoom: `${loginInfo.TitleRoom}`,
           maxHumidity: `${loginInfo.maxHumidity}`,
           minHumidity: `${loginInfo.minHumidity}`,
-          maxLight: `${loginInfo.maxLight}`,
+          maxLigth: `${loginInfo.maxLigth}`,
           minLigth: `${loginInfo.minLigth}`,
           createdAt: new Date(Date.now()),
         });
+      const handleClick = () => {
+        enqueueSnackbar("Edit room success!", {
+          variant: "success",
+        });
+      };
+      return handleClick() || handleClose();
     } catch (error) {
       alert(error);
     }
@@ -174,17 +182,17 @@ export default function Editmaster(props) {
                 ></TextField>
 
                 <TextField
-                  {...register("maxLight")}
+                  {...register("maxLigth")}
                   margin="dense"
-                  id="maxLight"
-                  label="maxLight"
-                  name="maxLight"
-                  type="maxLight"
+                  id="maxLigth"
+                  label="maxLigth"
+                  name="maxLigth"
+                  type="maxLigth"
                   fullWidth
                   color="primary"
                   //autoFocus
-                  helperText={errors.maxLight?.message || ""}
-                  error={!!errors.maxLight}
+                  helperText={errors.maxLigth?.message || ""}
+                  error={!!errors.maxLigth}
                 ></TextField>
 
                 <TextField

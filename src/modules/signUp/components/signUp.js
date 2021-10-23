@@ -36,7 +36,7 @@ export default function SignUp() {
         firstName: yup.string().required(),
         lastName: yup.string().required(),
         IDworkPlace: yup.string().min(6).required(),
-        TelephoneNumber: yup.string().min(6).required(),
+        TelephoneNumber: yup.number().min(10).required(),
         Address: yup.string().required(),
       })
     ),

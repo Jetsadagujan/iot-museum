@@ -40,7 +40,7 @@ export default function ButtonAdd() {
     TitleRoom: ``,
     maxHumidity: ``,
     minHumidity: ``,
-    maxLight: ``,
+    maxLigth: ``,
     minLigth: ``,
   };
   const [datacheck, setDatacheck] = useState(null);
@@ -89,7 +89,7 @@ export default function ButtonAdd() {
             titleRoom: `${loginInfo.titleRoom}`,
             maxHumidity: `${loginInfo.maxHumadity}`,
             minHumidity: `${loginInfo.minHumadity}`,
-            maxLight: `${loginInfo.maxLigth}`,
+            maxLigth: `${loginInfo.maxLigth}`,
             minLigth: `${loginInfo.minLigth}`,
             createdAt: new Date(Date.now()),
           });
