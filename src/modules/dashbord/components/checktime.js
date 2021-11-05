@@ -21,9 +21,6 @@ export default function CheckTime(props) {
 
   return (
     <>
-      {/* {console.log(`${time}...${dateTime}...${id}`)} */}
-      {/* {console.log(dateTime)}
-      {console.log(`${count} ${id}`)} */}
       {+time < +dateTime + 10 && +time > +dateTime - 10 ? (
         <TableCell
           align="right"

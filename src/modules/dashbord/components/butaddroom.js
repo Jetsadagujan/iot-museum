@@ -9,9 +9,6 @@ import {
   TextField,
   Toolbar,
   FormControl,
-  //   Link,
-  //   Box,
-  //   Grid,
 } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
@@ -46,6 +43,7 @@ export default function ButtonAdd() {
   const [datacheck, setDatacheck] = useState(null);
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
+  const [info, setInfo] = useState();
   const classes = useStyles();
   const { userContext } = useContext(AuthContext);
   const {
@@ -74,33 +72,10 @@ export default function ButtonAdd() {
     }
   }, [userContext]);
 
-  const submit = async (loginInfo) => {
-    try {
-      const mydata = await firebaseConfig
-        .database()
-        .ref(`data/${loginInfo.contlroller}`);
-      mydata.on("value", (datasnap) => setDatacheck(datasnap.val()));
-      if (datacheck) {
-        await firebaseConfig
-          .firestore()
-          .collection(`${user[0].work}`)
-          .add({
-            IDcontroller: `${loginInfo.contlroller}`,
-            titleRoom: `${loginInfo.titleRoom}`,
-            maxHumidity: `${loginInfo.maxHumadity}`,
-            minHumidity: `${loginInfo.minHumadity}`,
-            maxLigth: `${loginInfo.maxLigth}`,
-            minLigth: `${loginInfo.minLigth}`,
-            createdAt: new Date(Date.now()),
-          });
-        reset(deFault);
-        const handleClick = () => {
-          enqueueSnackbar("Add room success!", {
-            variant: "success",
-          });
-        };
-        return handleClick() || handleClose();
-      } else {
+  useEffect(() => {
+    if (datacheck) {
+      console.log(datacheck._delegate.size);
+      if (datacheck._delegate.size === 0) {
         const handleClick = () => {
           enqueueSnackbar("No IDcontroller", {
             variant: "error",
@@ -108,7 +83,61 @@ export default function ButtonAdd() {
         };
         reset(deFault);
         return handleClick() || handleClose();
+      } else {
+        const add = async () => {
+          await firebaseConfig
+            .firestore()
+            .collection(`${user[0].work}`)
+            .add({
+              IDcontroller: `${info.contlroller}`,
+              titleRoom: `${info.titleRoom}`,
+              maxHumidity: `${info.maxHumadity}`,
+              minHumidity: `${info.minHumadity}`,
+              maxLigth: `${info.maxLigth}`,
+              minLigth: `${info.minLigth}`,
+              createdAt: new Date(Date.now()),
+            });
+
+          await firebaseConfig
+            .database()
+            .ref(`data/${info.contlroller}`)
+            .update({
+              titleRoom: `${info.titleRoom}`,
+              maxHumidity: `${info.maxHumadity}`,
+              minHumidity: `${info.minHumadity}`,
+              maxLigth: `${info.maxLigth}`,
+              minLigth: `${info.minLigth}`,
+            });
+          reset(deFault);
+          const handleClick = () => {
+            enqueueSnackbar("Add room success!", {
+              variant: "success",
+            });
+          };
+
+          return handleClick() || handleClose();
+        };
+        add();
       }
+
+      setDatacheck(null);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [info]);
+
+  const submit = (loginInfo) => {
+    try {
+      const getdata = async () => {
+        const mydata = await firebaseConfig
+          .database()
+          .ref(`data/${loginInfo.contlroller}`)
+          .get();
+        setDatacheck(mydata);
+        setInfo(loginInfo);
+      };
+
+      getdata();
     } catch (error) {
       alert(error);
     }

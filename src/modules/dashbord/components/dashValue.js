@@ -15,20 +15,10 @@ export default function DashDeails(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const sumCount = async (sum) => {
-  //   setCount(sum);
-  //   // console.log(count);
-  // };
-
   if (dataItem) {
     return (
       <>
-        {/* <CheckTime
-          time={dataItem.time}
-          id={props.detail.IDcontroller}
-        ></CheckTime> */}
         {props.st === 1 ? (
-          // <TableCell align="right">{dataItem.humadity}</TableCell>
           dataItem.humadity > +detail.maxHumidity ||
           dataItem.humadity < +detail.minHumidity ? (
             <TableCell
@@ -36,7 +26,6 @@ export default function DashDeails(props) {
               style={{ backgroundColor: "white", color: "red" }}
             >
               {dataItem.humadity}
-              {/* <div onChange={sumCount(dataItem.time)}></div> */}
             </TableCell>
           ) : (
             <TableCell
@@ -46,8 +35,7 @@ export default function DashDeails(props) {
               {dataItem.humadity}
             </TableCell>
           )
-        ) : // <TableCell align="right">{dataItem.ligth}</TableCell>
-        props.st === 2 ? (
+        ) : props.st === 2 ? (
           dataItem.ligth > +detail.maxLigth ||
           dataItem.ligth < +detail.minLigth ? (
             <TableCell

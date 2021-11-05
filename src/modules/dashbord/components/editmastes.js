@@ -29,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Editmaster(props) {
   const { enqueueSnackbar } = useSnackbar();
   const { row, id } = props;
+  const [datacheck, setDatacheck] = useState(null);
+  const [info, setInfo] = useState();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
   const classes = useStyles();
@@ -71,27 +73,57 @@ export default function Editmaster(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [row]);
 
-  const submit = async (loginInfo) => {
-    try {
-      await firebaseConfig
-        .firestore()
-        .collection(`${user[0].work}`)
-        .doc(`${id}`)
-        .set({
-          IDcontroller: `${loginInfo.IDcontroller}`,
-          titleRoom: `${loginInfo.TitleRoom}`,
-          maxHumidity: `${loginInfo.maxHumidity}`,
-          minHumidity: `${loginInfo.minHumidity}`,
-          maxLigth: `${loginInfo.maxLigth}`,
-          minLigth: `${loginInfo.minLigth}`,
-          createdAt: new Date(Date.now()),
-        });
-      const handleClick = () => {
-        enqueueSnackbar("Edit room success!", {
-          variant: "success",
-        });
+  useEffect(() => {
+    if (datacheck) {
+      const add = async () => {
+        await firebaseConfig
+          .firestore()
+          .collection(`${user[0].work}`)
+          .doc(`${id}`)
+          .update({
+            IDcontroller: `${info.IDcontroller}`,
+            titleRoom: `${info.TitleRoom}`,
+            maxHumidity: `${info.maxHumidity}`,
+            minHumidity: `${info.minHumidity}`,
+            maxLigth: `${info.maxLigth}`,
+            minLigth: `${info.minLigth}`,
+            createdAt: new Date(Date.now()),
+          });
+        const mydata = await firebaseConfig
+          .database()
+          .ref(`data/${info.IDcontroller}`)
+          .update({
+            titleRoom: `${info.TitleRoom}`,
+            maxHumidity: `${info.maxHumidity}`,
+            minHumidity: `${info.minHumidity}`,
+            maxLigth: `${info.maxLigth}`,
+            minLigth: `${info.minLigth}`,
+          });
+        const handleClick = () => {
+          enqueueSnackbar("Edit room success!", {
+            variant: "success",
+          });
+        };
+        return handleClick() || handleClose() || mydata;
       };
-      return handleClick() || handleClose();
+      add();
+      setDatacheck(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [info]);
+
+  const submit = (loginInfo) => {
+    try {
+      const getdata = async () => {
+        const mydata = await firebaseConfig
+          .database()
+          .ref(`data/${loginInfo.IDcontroller}`)
+          .get();
+        setDatacheck(mydata);
+        setInfo(loginInfo);
+      };
+
+      getdata();
     } catch (error) {
       alert(error);
     }
