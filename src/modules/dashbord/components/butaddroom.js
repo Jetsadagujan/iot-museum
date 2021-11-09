@@ -107,6 +107,7 @@ export default function ButtonAdd() {
               minHumidity: `${info.minHumadity}`,
               maxLigth: `${info.maxLigth}`,
               minLigth: `${info.minLigth}`,
+              IDmuseum: `${user[0].work}`,
             });
           reset(deFault);
           const handleClick = () => {

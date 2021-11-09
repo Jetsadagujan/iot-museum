@@ -30,7 +30,7 @@ export default function SelectData(props) {
 
   return (
     <Grid container spacing={2} justifyContent={"center"}>
-      <Grid item xs={12} md={6}>
+      <Grid item md={6}>
         <Box
           sx={{ m: 1, minWidth: 120 }}
           style={{
@@ -74,7 +74,6 @@ export default function SelectData(props) {
       </Grid>
       <Grid
         item
-        xs={12}
         md={6}
         style={{
           display: "flex",

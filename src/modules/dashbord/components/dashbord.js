@@ -221,5 +221,5 @@ export default function Dashbord() {
       </div>
     );
   }
-  return <Redirect to="home"></Redirect>;
+  return <Redirect to="/"></Redirect>;
 }

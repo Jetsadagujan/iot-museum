@@ -9,7 +9,7 @@ import {
   TextField,
   Toolbar,
   FormControl,
-  Link,
+  // Link,
   Typography,
 } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
@@ -154,12 +154,12 @@ export default function ButtonLogin() {
               paddingRight: "20px",
             }}
           >
-            <Link href="/signUp" underline="always">
+            {/* <Link href="/signUp" underline="always">
               signUp
-            </Link>
-            <Typography variant="body2" gutterBottom>
+            </Link> */}
+            {/* <Typography variant="body2" gutterBottom>
               ro
-            </Typography>
+            </Typography> */}
             <Forgotpass></Forgotpass>
           </div>
           <DialogActions>

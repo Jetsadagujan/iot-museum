@@ -29,16 +29,22 @@ export default function Home() {
     <Grid item xs={12}>
       <Toolbar></Toolbar>
       <Grid item className={classes.bg} id="home" xs={12}>
-        <Grid item xs={4}>
+        <Grid
+          item
+          xs={12}
+          style={{
+            justifyContent: "center",
+            display: "flex",
+            alignItems: "center",
+            height: "100%",
+            flexDirection: "column",
+            paddingBottom: "100px",
+          }}
+        >
           <Card
-            sx={{ minWidth: 275 }}
+            sx={{ minWidth: 375 }}
             elevation={10}
-            style={{
-              position: "absolute",
-              top: "200px",
-              left: "100px",
-              width: "400px",
-            }}
+            style={{ width: "350px" }}
           >
             <CardContent>
               <Typography variant="h6" gutterBottom component="div">
@@ -53,17 +59,19 @@ export default function Home() {
             </CardContent>
             <CardActions></CardActions>
           </Card>
+          <div style={{ paddingRight: "195px" }}>
+            <ButtonDash></ButtonDash>
+          </div>
         </Grid>
-        <div
+        {/* <div
           style={{
-            position: "absolute",
-            top: "360px",
-            left: "100px",
-            width: "400px",
+            justifyContent: "center",
+            display: "flex",
+            alignItems: "center",
           }}
         >
           <ButtonDash></ButtonDash>
-        </div>
+        </div> */}
       </Grid>
     </Grid>
   );

@@ -12,20 +12,26 @@ export default function CheckTime(props) {
   useEffect(() => {
     const timer = setInterval(() => {
       const date = new Date();
-      setDateTime(date.getHours() + date.getMinutes() + date.getSeconds());
+      setDateTime(
+        `${date.getHours() + 11}${date.getMinutes() + 11}${
+          date.getSeconds() + 11
+        }`
+      );
       // setCount(+time);
-    }, 1000);
+    }, 3);
     return () => clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
-      {+time < +dateTime + 10 && +time > +dateTime - 10 ? (
+      {/* {console.log(dateTime)} */}
+      {+time < +dateTime + 7 && +time > +dateTime - 7 ? (
         <TableCell
           align="right"
           style={{ backgroundColor: "white", color: "green" }}
         >
+          {/* {console.log(`${time}    ${dateTime}`)} */}
           Online
         </TableCell>
       ) : (

@@ -30,6 +30,9 @@ export default function Graph(props) {
       curve: "smooth",
     },
     xaxis: {
+      min: 1,
+      max: 1,
+      Range: 1,
       type: "string",
       categories: ["00:00"],
     },

@@ -98,6 +98,7 @@ export default function Editmaster(props) {
             minHumidity: `${info.minHumidity}`,
             maxLigth: `${info.maxLigth}`,
             minLigth: `${info.minLigth}`,
+            IDmuseum: `${user[0].work}`,
           });
         const handleClick = () => {
           enqueueSnackbar("Edit room success!", {
