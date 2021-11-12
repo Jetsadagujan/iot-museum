@@ -120,7 +120,7 @@ export default function Dashbord() {
               <MenuIcon />
             </IconButton>
             <Link href="/" color="inherit" underline="none">
-              LOGO
+              IOT-Museum
             </Link>
           </Toolbar>
         </AppBar>

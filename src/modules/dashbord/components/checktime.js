@@ -11,7 +11,7 @@ export default function CheckTime(props) {
     const timer = setInterval(() => {
       const date = new Date();
       setDateTime(`${date.getHours() + 11}${date.getMinutes() + 11}`);
-      // setCount(+time);
+      // setCount(+time);d
     }, 1000);
     return () => clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps

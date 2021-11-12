@@ -27,7 +27,7 @@ export default function Header() {
           }}
         >
           <LinkMat to="/" color="inherit" underline="none" component={Link}>
-            LOGO
+            IOT-Museum
           </LinkMat>
           <div
             style={{
