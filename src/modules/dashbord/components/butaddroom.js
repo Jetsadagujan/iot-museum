@@ -74,7 +74,7 @@ export default function ButtonAdd() {
 
   useEffect(() => {
     if (datacheck) {
-      console.log(datacheck._delegate.size);
+      // console.log(datacheck._delegate.size);
       if (datacheck._delegate.size === 0) {
         const handleClick = () => {
           enqueueSnackbar("No IDcontroller", {

@@ -101,7 +101,7 @@ export default function Dashbord() {
   if (currentUser) {
     return (
       <div className={classes.root}>
-        {console.log(currentUser)}
+        {/* {console.log(currentUser)} */}
         <CssBaseline />
         <AppBar
           position="fixed"

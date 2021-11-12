@@ -30,9 +30,6 @@ export default function Graph(props) {
       curve: "smooth",
     },
     xaxis: {
-      min: 1,
-      max: 1,
-      Range: 1,
       type: "string",
       categories: ["00:00"],
     },
@@ -132,8 +129,14 @@ export default function Graph(props) {
           curve: "smooth",
         },
         xaxis: {
+          min: undefined,
+          max: undefined,
+          range: undefined,
           type: "string",
           categories: dataGraph[idDoc].time,
+          labels: {
+            show: false,
+          },
         },
         tooltip: {
           x: {
@@ -174,10 +177,6 @@ export default function Graph(props) {
           </Box>
         ) : (
           <div>
-            <>
-              {console.log("1 ==> ", series)}
-              {console.log("2 ==> ", options)}
-            </>
             <ReactApexChart
               options={options}
               series={series}

@@ -10,19 +10,19 @@ export const AuthProvider = ({ children }) => {
   const [userContext, setUsercontext] = useState(null);
 
   useEffect(() => {
-    console.log("in");
+    // console.log("in");
     try {
       firebaseConfig.auth().onAuthStateChanged((user) => {
         setCurrentUser(user);
         setLoading(false);
-        console.log("in A");
+        // console.log("in A");
       });
     } catch (error) {
       console.log(error);
     }
 
     if (currentUser) {
-      console.log("in B");
+      // console.log("in B");
       async function get() {
         try {
           const data = await firebaseConfig
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
             .where("email", "==", `${currentUser.email}`)
             .get();
           const dataSearch = data.docs.map((eachDaea) => eachDaea.data());
-          console.log("====", dataSearch);
+          // console.log("====", dataSearch);
           setUsercontext(dataSearch);
         } catch (error) {}
       }

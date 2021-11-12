@@ -132,8 +132,14 @@ export default function GraphPDF(props) {
           curve: "smooth",
         },
         xaxis: {
+          min: undefined,
+          max: undefined,
+          range: undefined,
           type: "string",
           categories: dataGraph[idDoc].time,
+          labels: {
+            show: false,
+          },
         },
         tooltip: {
           x: {
