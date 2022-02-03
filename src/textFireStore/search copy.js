@@ -34,7 +34,9 @@ export default function SearchFiretrue() {
           .get();
         const dataSearch = data.docs.map((eachDaea) => eachDaea.data());
         setUser(dataSearch);
-      } catch (error) {}
+      } catch (error) {
+        console.log("error");
+      }
     }
     if (search) {
       getUser();
@@ -57,6 +59,7 @@ export default function SearchFiretrue() {
   };
   return (
     <div>
+      {console.log(user.length)}
       <form onSubmit={handleSubmit(SubmitSearch)} noValidate autoComplete="off">
         <FormControl>
           <TextField

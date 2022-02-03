@@ -36,7 +36,7 @@ export default function SignUp() {
         firstName: yup.string().required(),
         lastName: yup.string().required(),
         IDworkPlace: yup.string().min(6).required(),
-        TelephoneNumber: yup.string().min(6).required(),
+        TelephoneNumber: yup.number().min(10).required(),
         Address: yup.string().required(),
       })
     ),
@@ -201,9 +201,11 @@ export default function SignUp() {
               </FormControl>
             </Grid>
             <Grid item>
-              <Button type="submit" variant="contained" color="primary">
-                SignUp
-              </Button>
+              <Link href="/" underline="none">
+                <Button type="submit" variant="contained" color="primary">
+                  SignUp
+                </Button>
+              </Link>
               <Link href="/" underline="none">
                 <Button variant="contained" color="secondary">
                   Close

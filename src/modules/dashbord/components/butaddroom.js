@@ -9,15 +9,13 @@ import {
   TextField,
   Toolbar,
   FormControl,
-  //   Link,
-  //   Box,
-  //   Grid,
 } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import firebaseConfig from "../../../firebase/config/config";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   titleapp: {
@@ -32,14 +30,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAdd() {
+export default function ButtonAdd(props) {
+  const { work } = props;
+  const { enqueueSnackbar } = useSnackbar();
+  const deFault = {
+    IDcontroller: ``,
+    TitleRoom: ``,
+    maxHumidity: ``,
+    minHumidity: ``,
+    maxLigth: ``,
+    minLigth: ``,
+  };
+  const [datacheck, setDatacheck] = useState(null);
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
+  const [info, setInfo] = useState();
   const classes = useStyles();
   const { userContext } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(
@@ -62,21 +73,74 @@ export default function ButtonAdd() {
     }
   }, [userContext]);
 
-  const submit = async (loginInfo) => {
+  useEffect(() => {
+    if (datacheck) {
+      // console.log(datacheck._delegate.size);
+      if (datacheck._delegate.size === 0) {
+        const handleClick = () => {
+          enqueueSnackbar("No IDcontroller", {
+            variant: "error",
+          });
+        };
+        reset(deFault);
+        return handleClick() || handleClose();
+      } else {
+        const add = async () => {
+          await firebaseConfig
+            .firestore()
+            .collection(`${work}`)
+            .add({
+              IDcontroller: `${info.contlroller}`,
+              titleRoom: `${info.titleRoom}`,
+              maxHumidity: `${info.maxHumadity}`,
+              minHumidity: `${info.minHumadity}`,
+              maxLigth: `${info.maxLigth}`,
+              minLigth: `${info.minLigth}`,
+              createdAt: new Date(Date.now()),
+            });
+
+          await firebaseConfig
+            .database()
+            .ref(`data/${info.contlroller}`)
+            .update({
+              titleRoom: `${info.titleRoom}`,
+              maxHumidity: `${info.maxHumadity}`,
+              minHumidity: `${info.minHumadity}`,
+              maxLigth: `${info.maxLigth}`,
+              minLigth: `${info.minLigth}`,
+              IDmuseum: `${user[0].work}`,
+              Token: `${userContext[0].Token}`,
+            });
+          reset(deFault);
+          const handleClick = () => {
+            enqueueSnackbar("Add room success!", {
+              variant: "success",
+            });
+          };
+
+          return handleClick() || handleClose();
+        };
+        add();
+      }
+
+      setDatacheck(null);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [info]);
+
+  const submit = (loginInfo) => {
     try {
-      await firebaseConfig
-        .firestore()
-        .collection(`${user[0].work}`)
-        .add({
-          IDcontroller: `${loginInfo.contlroller}`,
-          titleRoom: `${loginInfo.titleRoom}`,
-          maxHumidity: `${loginInfo.maxHumadity}`,
-          minHumidity: `${loginInfo.minHumadity}`,
-          maxLight: `${loginInfo.maxLigth}`,
-          minLigth: `${loginInfo.minLigth}`,
-          createdAt: new Date(Date.now()),
-        });
-      console.log(user);
+      const getdata = async () => {
+        const mydata = await firebaseConfig
+          .database()
+          .ref(`data/${loginInfo.contlroller}`)
+          .get();
+        setDatacheck(mydata);
+        setInfo(loginInfo);
+      };
+
+      getdata();
     } catch (error) {
       alert(error);
     }

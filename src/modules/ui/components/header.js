@@ -27,7 +27,7 @@ export default function Header() {
           }}
         >
           <LinkMat to="/" color="inherit" underline="none" component={Link}>
-            LOGO
+            IOT-Museum
           </LinkMat>
           <div
             style={{
@@ -35,6 +35,7 @@ export default function Header() {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+              cursor: "default",
             }}
           >
             <Links
@@ -50,10 +51,10 @@ export default function Header() {
             </Links>
             <Links
               activeClass="active"
-              to="about"
+              to="home"
               spy={true}
               smooth={true}
-              offset={0}
+              offset={750}
               duration={500}
               className={classes.menuLink}
             >

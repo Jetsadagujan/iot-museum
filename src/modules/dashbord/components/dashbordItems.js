@@ -12,7 +12,9 @@ import {
   Paper,
 } from "@material-ui/core";
 import Tabledata from "./row";
-import Graph from "./graph";
+import Selectdisplay from "./selectdisplay";
+import ButtonAdd from "./butaddroom";
+import { Skeleton } from "@material-ui/lab";
 
 export default function DashbordItem() {
   const [dash, setDash] = useState(undefined);
@@ -35,47 +37,58 @@ export default function DashbordItem() {
         // เปลี่ยนค่าตัวแปร state
         setDash(users);
       });
-
-    // firebaseConfig.firestore().collection(`${userContext[0].work}`).orderBy;
   }, [userContext]);
 
   if (dash) {
     return (
       <>
-        <Graph></Graph>
-        {/* {Object.keys(dash).map((id) => {
-          return <div key={id}>{console.log(dash[id].createdAt)}</div>;
-        })} */}
+        <Selectdisplay IDctl={dash}></Selectdisplay>
         <Grid container spacing={2} justifyContent="center">
-          {dash ? (
-            <TableContainer component={Paper}>
-              <Table aria-label="collapsible table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell />
-                    <TableCell>TitleRoom</TableCell>
-                    <TableCell align="right">maxHumidity</TableCell>
-                    <TableCell align="right">minHumidity</TableCell>
-                    <TableCell align="right">maxLight</TableCell>
-                    <TableCell align="right">minLigth</TableCell>
-                    <TableCell align="right">Humidity</TableCell>
-                    <TableCell align="right">Light</TableCell>
-                    <TableCell />
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {Object.keys(dash).map((id) => (
-                    <Tabledata key={id} row={dash[id]} id={id} />
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          ) : (
-            <div>loading.........itemdash</div>
-          )}
+          <Grid item xs={10}>
+            {dash ? (
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="collapsible table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Edit</TableCell>
+                      <TableCell>TitleRoom</TableCell>
+                      <TableCell align="right">IDcontroller</TableCell>
+                      <TableCell align="right">Humidity</TableCell>
+                      <TableCell align="right">Light</TableCell>
+                      <TableCell align="right">Status</TableCell>
+                      <TableCell align="right">Delete</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {Object.keys(dash).map((id) => (
+                      <Tabledata key={id} row={dash[id]} id={id} />
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <div>loading.........itemdash</div>
+            )}
+          </Grid>
         </Grid>
+        <ButtonAdd work={userContext[0].work}></ButtonAdd>
       </>
     );
   }
-  return <div>loading.........itemdash</div>;
+  return (
+    <>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Skeleton variant="text" width={"80%"} />
+        <Skeleton variant="rect" width={"80%"} height={100} />
+        <Skeleton variant="rect" width={"80%"} height={300} />
+      </div>
+    </>
+  );
 }

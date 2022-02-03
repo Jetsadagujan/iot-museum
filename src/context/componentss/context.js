@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import firebaseConfig from "../../firebase/config/config";
+import LoadingPage from "../../modules/dashbord/components/loadingPage";
 
 export const AuthContext = React.createContext();
 
@@ -9,15 +10,19 @@ export const AuthProvider = ({ children }) => {
   const [userContext, setUsercontext] = useState(null);
 
   useEffect(() => {
-    console.log("in");
+    // console.log("in");
+    try {
+      firebaseConfig.auth().onAuthStateChanged((user) => {
+        setCurrentUser(user);
+        setLoading(false);
+        // console.log("in A");
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
-    firebaseConfig.auth().onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      setLoading(false);
-      console.log("in A");
-    });
     if (currentUser) {
-      console.log("in B");
+      // console.log("in B");
       async function get() {
         try {
           const data = await firebaseConfig
@@ -26,7 +31,7 @@ export const AuthProvider = ({ children }) => {
             .where("email", "==", `${currentUser.email}`)
             .get();
           const dataSearch = data.docs.map((eachDaea) => eachDaea.data());
-          console.log("====", dataSearch);
+          // console.log("====", dataSearch);
           setUsercontext(dataSearch);
         } catch (error) {}
       }
@@ -36,12 +41,10 @@ export const AuthProvider = ({ children }) => {
     }
   }, [currentUser]);
 
-  // useEffect(() => {
-
-  // }, [currentUser]);
+  useEffect(() => {}, [currentUser]);
 
   if (loading) {
-    return <p>Loading......</p>;
+    return <LoadingPage />;
   }
 
   return (

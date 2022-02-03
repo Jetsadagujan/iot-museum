@@ -17,6 +17,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import firebaseConfig from "../../../firebase/config/config";
 import { Edit } from "@material-ui/icons";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   titleapp: {
@@ -26,7 +27,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Editmaster(props) {
-  const { row, id } = props;
+  const { enqueueSnackbar } = useSnackbar();
+  const { row, id, token } = props;
+  const [datacheck, setDatacheck] = useState(null);
+  const [info, setInfo] = useState();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
   const classes = useStyles();
@@ -36,7 +40,7 @@ export default function Editmaster(props) {
     TitleRoom: `${row.titleRoom}`,
     maxHumidity: `${row.maxHumidity}`,
     minHumidity: `${row.minHumidity}`,
-    maxLight: `${row.maxLight}`,
+    maxLigth: `${row.maxLigth}`,
     minLigth: `${row.minLigth}`,
   };
   const {
@@ -53,7 +57,7 @@ export default function Editmaster(props) {
         TitleRoom: yup.string().required(),
         maxHumidity: yup.string().required(),
         minHumidity: yup.string().required(),
-        maxLight: yup.string().required(),
+        maxLigth: yup.string().required(),
         minLigth: yup.string().required(),
       })
     ),
@@ -69,21 +73,59 @@ export default function Editmaster(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [row]);
 
-  const submit = async (loginInfo) => {
+  useEffect(() => {
+    if (datacheck) {
+      const add = async () => {
+        await firebaseConfig
+          .firestore()
+          .collection(`${user[0].work}`)
+          .doc(`${id}`)
+          .update({
+            IDcontroller: `${info.IDcontroller}`,
+            titleRoom: `${info.TitleRoom}`,
+            maxHumidity: `${info.maxHumidity}`,
+            minHumidity: `${info.minHumidity}`,
+            maxLigth: `${info.maxLigth}`,
+            minLigth: `${info.minLigth}`,
+            createdAt: new Date(Date.now()),
+          });
+        const mydata = await firebaseConfig
+          .database()
+          .ref(`data/${info.IDcontroller}`)
+          .update({
+            titleRoom: `${info.TitleRoom}`,
+            maxHumidity: `${info.maxHumidity}`,
+            minHumidity: `${info.minHumidity}`,
+            maxLigth: `${info.maxLigth}`,
+            minLigth: `${info.minLigth}`,
+            IDmuseum: `${user[0].work}`,
+            Token: `${token}`,
+          });
+        const handleClick = () => {
+          enqueueSnackbar("Edit room success!", {
+            variant: "success",
+          });
+        };
+        return handleClick() || handleClose() || mydata;
+      };
+      add();
+      setDatacheck(null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [info]);
+
+  const submit = (loginInfo) => {
     try {
-      await firebaseConfig
-        .firestore()
-        .collection(`${user[0].work}`)
-        .doc(`${id}`)
-        .set({
-          IDcontroller: `${loginInfo.IDcontroller}`,
-          titleRoom: `${loginInfo.TitleRoom}`,
-          maxHumidity: `${loginInfo.maxHumidity}`,
-          minHumidity: `${loginInfo.minHumidity}`,
-          maxLight: `${loginInfo.maxLight}`,
-          minLigth: `${loginInfo.minLigth}`,
-          createdAt: new Date(Date.now()),
-        });
+      const getdata = async () => {
+        const mydata = await firebaseConfig
+          .database()
+          .ref(`data/${loginInfo.IDcontroller}`)
+          .get();
+        setDatacheck(mydata);
+        setInfo(loginInfo);
+      };
+
+      getdata();
     } catch (error) {
       alert(error);
     }
@@ -174,17 +216,17 @@ export default function Editmaster(props) {
                 ></TextField>
 
                 <TextField
-                  {...register("maxLight")}
+                  {...register("maxLigth")}
                   margin="dense"
-                  id="maxLight"
-                  label="maxLight"
-                  name="maxLight"
-                  type="maxLight"
+                  id="maxLigth"
+                  label="maxLigth"
+                  name="maxLigth"
+                  type="maxLigth"
                   fullWidth
                   color="primary"
                   //autoFocus
-                  helperText={errors.maxLight?.message || ""}
-                  error={!!errors.maxLight}
+                  helperText={errors.maxLigth?.message || ""}
+                  error={!!errors.maxLigth}
                 ></TextField>
 
                 <TextField

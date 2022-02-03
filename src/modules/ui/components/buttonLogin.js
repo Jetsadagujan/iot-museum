@@ -9,7 +9,7 @@ import {
   TextField,
   Toolbar,
   FormControl,
-  Link,
+  // Link,
   Typography,
 } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import firebaseConfig from "../../../firebase/config/config";
+import Forgotpass from "./buttonforgotpass";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   titleapp: {
@@ -26,13 +28,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonLogin() {
+  const { enqueueSnackbar } = useSnackbar();
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState();
+  const deFault = {
+    email: ``,
+    password: ``,
+  };
   const classes = useStyles();
   const { userContext } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     //mode: "onBlur",
@@ -52,12 +60,17 @@ export default function ButtonLogin() {
     }
   }, [userContext]);
 
-  const submit = (loginInfo) => {
+  const submit = async (loginInfo) => {
     try {
-      firebaseConfig
+      await firebaseConfig
         .auth()
         .signInWithEmailAndPassword(loginInfo.email, loginInfo.password);
-      console.log(loginInfo);
+      const handleClick = () => {
+        enqueueSnackbar("Login success!", {
+          variant: "success",
+        });
+      };
+      return handleClick() || handleClose() || reset(deFault);
     } catch (error) {
       alert(error);
     }
@@ -70,15 +83,6 @@ export default function ButtonLogin() {
     setOpen(false);
   };
 
-  /*const handleSubmit = (e) => {
-    e.preventDefault();
-    const values = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
-
-    console.log(values);
-  };*/
   if (user) {
     return (
       <div
@@ -145,15 +149,21 @@ export default function ButtonLogin() {
           <div
             style={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "space-between",
+              paddingLeft: "20px",
+              paddingRight: "20px",
             }}
           >
-            <Link href="/signUp" underline="always">
+            {/* <Link href="/signUp" underline="always">
               signUp
-            </Link>
+            </Link> */}
+            {/* <Typography variant="body2" gutterBottom>
+              ro
+            </Typography> */}
+            <Forgotpass></Forgotpass>
           </div>
           <DialogActions>
-            <Button type="submit" onClick={handleClose} color="primary">
+            <Button type="submit" color="primary">
               Login
             </Button>
             <Button onClick={handleClose} color="primary">
