@@ -18,6 +18,7 @@ export default function DashDeails(props) {
   if (dataItem) {
     return (
       <>
+        {console.log(dataItem)}
         {props.st === 1 ? (
           dataItem.humadity > +detail.maxHumidity ||
           dataItem.humadity < +detail.minHumidity ? (

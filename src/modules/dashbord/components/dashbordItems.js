@@ -71,7 +71,7 @@ export default function DashbordItem() {
             )}
           </Grid>
         </Grid>
-        <ButtonAdd></ButtonAdd>
+        <ButtonAdd work={userContext[0].work}></ButtonAdd>
       </>
     );
   }

@@ -5,6 +5,7 @@ import HomeRoutes from "./routes";
 // import SignUpRoutes from "../../signUp/components/routes";
 import DashBordRoutes from "../../dashbord/components/routes";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import Admin from "../../admin/admin";
 
 export default function Layout() {
   const theme = createTheme({
@@ -25,6 +26,9 @@ export default function Layout() {
           <Route path="/dashbord">
             <DashBordRoutes></DashBordRoutes>
           </Route>
+          <Route path="/manager">
+            <Admin></Admin>
+          </Route>
           {/* <Route path="/signup">
             <SignUpRoutes></SignUpRoutes>
           </Route> */}
@@ -32,6 +36,7 @@ export default function Layout() {
             <HomeRoutes></HomeRoutes>
           </Route>
         </Switch>
+        {/* <Admin></Admin> */}
       </ThemeProvider>
     </>
   );

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Editmaster(props) {
   const { enqueueSnackbar } = useSnackbar();
-  const { row, id } = props;
+  const { row, id, token } = props;
   const [datacheck, setDatacheck] = useState(null);
   const [info, setInfo] = useState();
   const [open, setOpen] = useState(false);
@@ -99,6 +99,7 @@ export default function Editmaster(props) {
             maxLigth: `${info.maxLigth}`,
             minLigth: `${info.minLigth}`,
             IDmuseum: `${user[0].work}`,
+            Token: `${token}`,
           });
         const handleClick = () => {
           enqueueSnackbar("Edit room success!", {

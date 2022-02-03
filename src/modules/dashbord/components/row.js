@@ -49,7 +49,11 @@ export default function Tabledata(props) {
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
-          <Editmaster row={row} id={id}></Editmaster>
+          <Editmaster
+            row={row}
+            id={id}
+            token={userContext[0].Token}
+          ></Editmaster>
         </TableCell>
         <TableCell component="th" scope="row">
           {row.titleRoom}

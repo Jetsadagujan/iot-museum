@@ -30,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ButtonAdd() {
+export default function ButtonAdd(props) {
+  const { work } = props;
   const { enqueueSnackbar } = useSnackbar();
   const deFault = {
     IDcontroller: ``,
@@ -87,7 +88,7 @@ export default function ButtonAdd() {
         const add = async () => {
           await firebaseConfig
             .firestore()
-            .collection(`${user[0].work}`)
+            .collection(`${work}`)
             .add({
               IDcontroller: `${info.contlroller}`,
               titleRoom: `${info.titleRoom}`,
@@ -108,6 +109,7 @@ export default function ButtonAdd() {
               maxLigth: `${info.maxLigth}`,
               minLigth: `${info.minLigth}`,
               IDmuseum: `${user[0].work}`,
+              Token: `${userContext[0].Token}`,
             });
           reset(deFault);
           const handleClick = () => {
